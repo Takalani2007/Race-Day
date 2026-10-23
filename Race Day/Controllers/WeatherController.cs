@@ -4,7 +4,7 @@ namespace Race_Day.Controllers
 {
     public class WeatherController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Index() 
         {
             return View();
         }

@@ -2,11 +2,29 @@
 
 namespace Race_Day.Controllers
 {
-    public class ParticipantController : Controller
+  public class ParticipantsController : Controller
     {
-        public IActionResult Index()
+        private readonly RaceEventApiService _api;
+        public ParticipantsController(RaceEventApiService api) => _api = api;
+
+        public async Task<IActionResult> Index() => View(await _api.GetAllParticipantsAsync());
+
+        [HttpGet]
+        public IActionResult Create() => View();
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Participant p)
         {
-            return View();
+            if (await _api.CreateParticipantAsync(p)) return RedirectToAction(nameof(Index));
+            ModelState.AddModelError("", "Failed to add participant.");
+            return View(p);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _api.DeleteParticipantAsync(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

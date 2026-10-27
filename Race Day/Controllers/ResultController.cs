@@ -1,12 +1,31 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Race_Day.Controllers
+
 {
-    public class ResultController : Controller
+public class ResultsController : Controller
     {
-        public IActionResult Index()
+        private readonly RaceEventApiService _api;
+        public ResultsController(RaceEventApiService api) => _api = api;
+
+        public async Task<IActionResult> Index() => View(await _api.GetAllResultsAsync());
+
+        [HttpGet]
+        public IActionResult Create() => View();
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Result r)
         {
-            return View();
+            if (await _api.CreateResultAsync(r)) return RedirectToAction(nameof(Index));
+            ModelState.AddModelError("", "Failed to add result.");
+            return View(r);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _api.DeleteResultAsync(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

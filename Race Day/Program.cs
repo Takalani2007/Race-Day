@@ -29,6 +29,6 @@ app.UseAuthorization();
 // 4. Set up the default MVC route
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Event}/{action=Index}/{id?}");
+    pattern: "{controller=Events}/{action=Index}/{id?}");
 
 app.Run();

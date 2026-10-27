@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Race_Day3.Services;
+using Race_Day.Services;
 
-namespace Race_Day3.Controllers
+namespace Race_Day.Controllers
 {
     public class EventsController : Controller
     {

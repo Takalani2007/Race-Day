@@ -1,5 +1,47 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<Race_Day.Models.Event>
+
 @{
+    ViewData["Title"] = "Events";
 }
+
+<h1>Race Events</h1>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Add New Event</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Location</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ev in Model)
+        {
+            <tr>
+                <td>@ev.EventId</td>
+                <td>@ev.Name</td>
+                <td>@ev.Date.ToShortDateString()</td>
+                <td>@ev.Location</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@ev.EventId">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

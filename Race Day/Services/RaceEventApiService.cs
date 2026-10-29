@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Http.Json;
 
-namespace Race_Day.Services
+namespace Race_Day3.Services
 {
     public class RaceEventApiService
     {
@@ -15,9 +15,17 @@ namespace Race_Day.Services
 
         public async Task<bool> LoginAsync(string email, string password)
         {
-            var request = new { Email = email, Password = password };
-            var response = await _httpClient.PostAsJsonAsync("api/auth/login", request);
-            return response.IsSuccessStatusCode;
+            var req = new { Email = email, Password = password };
+            var res = await _httpClient.PostAsJsonAsync("api/auth/login", req);
+            return res.IsSuccessStatusCode;
+        }
+
+        public async Task<User?> RegisterUserAsync(User user)
+        {
+            var res = await _httpClient.PostAsJsonAsync("api/auth/register", user);
+            if (res.IsSuccessStatusCode)
+                return await res.Content.ReadFromJsonAsync<User>();
+            return null;
         }
 
         public async Task<List<User>> GetAllUsersAsync() =>
@@ -32,8 +40,7 @@ namespace Race_Day.Services
         public async Task<bool> DeleteUserAsync(int id) =>
             (await _httpClient.DeleteAsync($"api/users/{id}")).IsSuccessStatusCode;
 
-
-
+       
         public async Task<List<Event>> GetAllEventsAsync() =>
             await _httpClient.GetFromJsonAsync<List<Event>>("api/events") ?? new();
 
@@ -49,8 +56,6 @@ namespace Race_Day.Services
         public async Task<bool> DeleteEventAsync(int id) =>
             (await _httpClient.DeleteAsync($"api/admin/events/{id}")).IsSuccessStatusCode;
 
-
-
         public async Task<List<Enrolment>> GetAllEnrolmentsAsync() =>
             await _httpClient.GetFromJsonAsync<List<Enrolment>>("api/enrolments") ?? new();
 
@@ -59,14 +64,12 @@ namespace Race_Day.Services
 
         public async Task<bool> EnrolAsync(int userId, int eventId)
         {
-            var request = new { UserId = userId, EventId = eventId };
-            return (await _httpClient.PostAsJsonAsync("api/enrolments", request)).IsSuccessStatusCode;
+            var req = new { UserId = userId, EventId = eventId };
+            return (await _httpClient.PostAsJsonAsync("api/enrolments", req)).IsSuccessStatusCode;
         }
 
         public async Task<bool> CancelEnrolmentAsync(int id) =>
             (await _httpClient.DeleteAsync($"api/enrolments/{id}")).IsSuccessStatusCode;
-
-
 
         public async Task<List<Feedback>> GetAllFeedbackAsync() =>
             await _httpClient.GetFromJsonAsync<List<Feedback>>("api/feedback") ?? new();
@@ -76,48 +79,27 @@ namespace Race_Day.Services
 
         public async Task<bool> SubmitFeedbackAsync(int eventId, int userId, string comment, int rating)
         {
-            var request = new { UserId = userId, Comment = comment, Rating = rating };
-            return (await _httpClient.PostAsJsonAsync($"api/feedback/event/{eventId}", request)).IsSuccessStatusCode;
+            var req = new { UserId = userId, Comment = comment, Rating = rating };
+            return (await _httpClient.PostAsJsonAsync($"api/feedback/event/{eventId}", req)).IsSuccessStatusCode;
         }
 
         public async Task<bool> DeleteFeedbackAsync(int id) =>
             (await _httpClient.DeleteAsync($"api/feedback/{id}")).IsSuccessStatusCode;
 
-
         public async Task<List<Weather>> GetAllWeatherAsync() =>
             await _httpClient.GetFromJsonAsync<List<Weather>>("api/weather") ?? new();
-
-        public async Task<Weather?> GetWeatherByIdAsync(int id) =>
-            await _httpClient.GetFromJsonAsync<Weather>($"api/weather/{id}");
-
-        public async Task<List<Weather>> GetWeatherByEventAsync(int eventId) =>
-            await _httpClient.GetFromJsonAsync<List<Weather>>($"api/weather/event/{eventId}") ?? new();
 
         public async Task<bool> CreateWeatherAsync(Weather weather) =>
             (await _httpClient.PostAsJsonAsync("api/weather", weather)).IsSuccessStatusCode;
 
-        public async Task<bool> UpdateWeatherAsync(int id, Weather weather) =>
-            (await _httpClient.PutAsJsonAsync($"api/weather/{id}", weather)).IsSuccessStatusCode;
-
         public async Task<bool> DeleteWeatherAsync(int id) =>
             (await _httpClient.DeleteAsync($"api/weather/{id}")).IsSuccessStatusCode;
-
-
 
         public async Task<List<Result>> GetAllResultsAsync() =>
             await _httpClient.GetFromJsonAsync<List<Result>>("api/results") ?? new();
 
-        public async Task<Result?> GetResultByIdAsync(int id) =>
-            await _httpClient.GetFromJsonAsync<Result>($"api/results/{id}");
-
-        public async Task<List<Result>> GetResultsByEventAsync(int eventId) =>
-            await _httpClient.GetFromJsonAsync<List<Result>>($"api/results/event/{eventId}") ?? new();
-
         public async Task<bool> CreateResultAsync(Result result) =>
             (await _httpClient.PostAsJsonAsync("api/results", result)).IsSuccessStatusCode;
-
-        public async Task<bool> UpdateResultAsync(int id, Result result) =>
-            (await _httpClient.PutAsJsonAsync($"api/results/{id}", result)).IsSuccessStatusCode;
 
         public async Task<bool> DeleteResultAsync(int id) =>
             (await _httpClient.DeleteAsync($"api/results/{id}")).IsSuccessStatusCode;
@@ -125,20 +107,8 @@ namespace Race_Day.Services
         public async Task<List<Participant>> GetAllParticipantsAsync() =>
             await _httpClient.GetFromJsonAsync<List<Participant>>("api/participants") ?? new();
 
-        public async Task<Participant?> GetParticipantByIdAsync(int id) =>
-            await _httpClient.GetFromJsonAsync<Participant>($"api/participants/{id}");
-
-        public async Task<List<Participant>> GetParticipantsByEventAsync(int eventId) =>
-            await _httpClient.GetFromJsonAsync<List<Participant>>($"api/participants/event/{eventId}") ?? new();
-
-        public async Task<List<Participant>> GetParticipantsByUserAsync(int userId) =>
-            await _httpClient.GetFromJsonAsync<List<Participant>>($"api/participants/user/{userId}") ?? new();
-
         public async Task<bool> CreateParticipantAsync(Participant participant) =>
             (await _httpClient.PostAsJsonAsync("api/participants", participant)).IsSuccessStatusCode;
-
-        public async Task<bool> UpdateParticipantAsync(int id, Participant participant) =>
-            (await _httpClient.PutAsJsonAsync($"api/participants/{id}", participant)).IsSuccessStatusCode;
 
         public async Task<bool> DeleteParticipantAsync(int id) =>
             (await _httpClient.DeleteAsync($"api/participants/{id}")).IsSuccessStatusCode;

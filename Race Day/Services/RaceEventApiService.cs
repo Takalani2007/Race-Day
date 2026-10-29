@@ -19,7 +19,7 @@ namespace Race_Day3.Services
             var res = await _httpClient.PostAsJsonAsync("api/auth/login", req);
             return res.IsSuccessStatusCode;
         }
-
+        //write something
         public async Task<User?> RegisterUserAsync(User user)
         {
             var res = await _httpClient.PostAsJsonAsync("api/auth/register", user);

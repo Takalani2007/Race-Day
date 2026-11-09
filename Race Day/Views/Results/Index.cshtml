@@ -1,5 +1,25 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model IEnumerable<Race_Day.Models.Result>
+<h2>Event Results</h2>
+<p><a asp-action="Create" class="btn btn-primary">Add Result</a></p>
+<table class="table">
+    <thead>
+        <tr><th>Event ID</th><th>Participant ID</th><th>Outcome</th><th>Score</th><th>Actions</th></tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model)
+        {
+            <tr>
+                <td>@r.EventId</td>
+                <td>@r.ParticipantId</td>
+                <td>@r.Outcome</td>
+                <td>@r.Score</td>
+                <td>
+                    <form asp-action="Delete" method="post">
+                        <input type="hidden" name="id" value="@r.ResultId" />
+                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

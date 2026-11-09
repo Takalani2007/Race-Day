@@ -1,0 +1,12 @@
+services:
+  raceday:
+    image: ${DOCKER_REGISTRY-}raceday
+    build:
+      context: .
+      dockerfile: Race Day/Dockerfile
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    environment:
+      - ApiBaseUrl=http://host.docker.internal:5031/
+      - ASPNETCORE_ENVIRONMENT=Development

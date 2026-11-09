@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Race_Day.Models.Participant>
+
+<h2>Participants</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Add Participant</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Event ID</th>
+            <th>User ID</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.EventId</td>
+                <td>@item.UserId</td>
+                <td>@item.Status</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.ParticipantId" class="btn btn-sm btn-info text-white">Details</a>
+                    <a asp-action="Edit" asp-route-id="@item.ParticipantId" class="btn btn-sm btn-warning">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@item.ParticipantId" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

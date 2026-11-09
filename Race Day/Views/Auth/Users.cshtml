@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Race_Day.Models.User>
+
+@{
+    ViewData["Title"] = "System Users";
+}
+
+<h1>System Users</h1>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.FullName</td>
+                <td>@user.Email</td>
+                <td>
+                    <span class="badge @(user.Role == "Admin" ? "bg-danger" : "bg-secondary")">
+                        @user.Role
+                    </span>
+                </td>
+                <td>
+                    <form asp-action="DeleteUser" method="post" style="display:inline;">
+                        <input type="hidden" name="id" value="@user.UserId" />
+                        <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this user?');">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

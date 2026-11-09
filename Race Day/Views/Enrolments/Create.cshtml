@@ -1,0 +1,21 @@
+﻿@model Race_Day.Models.Enrolment
+
+<h2>Create Enrolment</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div class="mb-3">
+                <label asp-for="UserId" class="form-label">User ID</label>
+                <input asp-for="UserId" class="form-control" required />
+            </div>
+            <div class="mb-3">
+                <label asp-for="EventId" class="form-label">Event ID</label>
+                <input asp-for="EventId" class="form-control" required />
+            </div>
+            <button type="submit" class="btn btn-success">Save</button>
+            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        </form>
+    </div>
+</div>

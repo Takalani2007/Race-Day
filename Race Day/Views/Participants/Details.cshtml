@@ -1,0 +1,24 @@
+﻿@model Race_Day.Models.Participant
+
+<h2>Participant Details</h2>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Participant ID</dt>
+        <dd class="col-sm-10">@Model.ParticipantId</dd>
+
+        <dt class="col-sm-2">Event ID</dt>
+        <dd class="col-sm-10">@Model.EventId</dd>
+
+        <dt class="col-sm-2">User ID</dt>
+        <dd class="col-sm-10">@Model.UserId</dd>
+
+        <dt class="col-sm-2">Status</dt>
+        <dd class="col-sm-10">@Model.Status</dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ParticipantId" class="btn btn-warning">Edit</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>

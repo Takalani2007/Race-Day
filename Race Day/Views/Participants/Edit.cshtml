@@ -1,0 +1,27 @@
+﻿@model Race_Day.Models.Participant
+
+<h2>Edit Participant</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <input type="hidden" asp-for="ParticipantId" />
+            <!-- EventId and UserId are hidden because you shouldn't change who/what they are linked to -->
+            <input type="hidden" asp-for="EventId" />
+            <input type="hidden" asp-for="UserId" />
+
+            <div class="mb-3">
+                <label asp-for="Status" class="form-label">Update Status</label>
+                <select asp-for="Status" class="form-control">
+                    <option value="Confirmed">Confirmed</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Cancelled">Cancelled</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-success">Update</button>
+            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        </form>
+    </div>
+</div>

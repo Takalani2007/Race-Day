@@ -1,0 +1,19 @@
+﻿@model Race_Day.Models.Enrolment
+
+<h2>Delete Enrolment</h2>
+<h4 class="text-danger">Are you sure you want to cancel this enrolment?</h4>
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">User ID</dt>
+        <dd class="col-sm-10">@Model.UserId</dd>
+
+        <dt class="col-sm-2">Event ID</dt>
+        <dd class="col-sm-10">@Model.EventId</dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="EnrolmentId" />
+        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </form>
+</div>

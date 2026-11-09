@@ -118,7 +118,7 @@ namespace Race_Day.Services
             (await _httpClient.PutAsJsonAsync($"api/enrolments/{id}", enrolment)).IsSuccessStatusCode;
 
 
-
+        // FEEDBACK
 
         public async Task<List<Feedback>> GetAllFeedbackAsync() =>
             await _httpClient.GetFromJsonAsync<List<Feedback>>("api/feedback") ?? new();

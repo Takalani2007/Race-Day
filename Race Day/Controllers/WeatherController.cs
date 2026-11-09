@@ -13,7 +13,7 @@ namespace Race_Day.Controllers
 
         [HttpGet]
         public IActionResult Create() => View();
-
+        
         [HttpPost]
         public async Task<IActionResult> Create(Weather w)
         {
@@ -21,7 +21,7 @@ namespace Race_Day.Controllers
             ModelState.AddModelError("", "Failed to add weather.");
             return View(w);
         }
-
+        // GET: Weather/Edit/5
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
